@@ -43,9 +43,9 @@ const coinCount = (amount, coinValues = [25, 10, 5, 1], numOfEachCoin = [] ) => 
 
   // base case
   if (amount <= 0 || coinValues.length == 0) {
-    return numOfEachCoin;
+    return [amount, coinValues, numOfEachCoin];
   } else {
-    
+
     // set new amount coinValues arr for next callback
     amountTransformedCopy = (amount % coinValues[0]);
 
@@ -53,7 +53,7 @@ const coinCount = (amount, coinValues = [25, 10, 5, 1], numOfEachCoin = [] ) => 
     coinValuesTransformedCopy = coinValues.slice(1);
 
     // set new number of coins array for next callback
-    numOfEachCoinTransformedCopy = numOfEachCoin.concat(Math.floor(amount / coinValues[0]));
+    numOfEachCoinTransformedCopy = [...numOfEachCoin, (Math.floor(amount / coinValues[0]))];
 
     return coinCount(amountTransformedCopy, coinValuesTransformedCopy, numOfEachCoinTransformedCopy)
   }
