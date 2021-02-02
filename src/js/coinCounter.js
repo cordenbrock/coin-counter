@@ -31,11 +31,10 @@
 // console.log(bankCounter(3.67));
 
 
+ 
+// RECURSION REFACTOR -- "Pure" Function
 
-// RECURSION REFACTOR
-
-const numOfEachCoin = [];
-const coinCount = (coinValues, amount) => {
+const coinCount = (amount, coinValues = [25, 10, 5, 1], numOfEachCoin = [] ) => {
 
   // termination case
   if (isNaN(amount))  {
@@ -47,17 +46,17 @@ const coinCount = (coinValues, amount) => {
     return numOfEachCoin;
   } else {
     
-    // add coin value count to empty array
-    numOfEachCoin.push(Math.floor(amount / coinValues[0]));
-    
-    // set amount and coinValues arr for next recursion
-    amount = (amount % coinValues[0]);
-    coinValues.shift();
+    // set new amount coinValues arr for next callback
+    amountTransformedCopy = (amount % coinValues[0]);
 
-    console.log(amount, coinValues);
+    // set new coin value array for next callback
+    coinValuesTransformedCopy = coinValues.slice(1);
 
-    return coinCount(coinValues, amount)
+    // set new number of coins array for next callback
+    numOfEachCoinTransformedCopy = numOfEachCoin.concat(Math.floor(amount / coinValues[0]));
+
+    return coinCount(amountTransformedCopy, coinValuesTransformedCopy, numOfEachCoinTransformedCopy)
   }
 }
 
-console.log(coinCount([25, 10, 5, 1], 149))
+console.log(coinCount(149))
